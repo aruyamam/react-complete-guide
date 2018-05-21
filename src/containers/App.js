@@ -1,10 +1,12 @@
 import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 
 import classes from './App.css';
 import Persons from '../components/Persons/Persons';
 import Cockpit from '../components/Cockpit/Cockpit';
 import Aux from '../hoc/Auxiliary';
 import withClass from '../hoc/withClass';
+import Person from '../components/Persons/Person/Person';
 // import ErrorBoundary from '../components/ErrorBoundary/ErrorBoundary';
 
 class App extends PureComponent {
@@ -13,7 +15,7 @@ class App extends PureComponent {
     console.log('[App.js] Inside Constructor', props);
     this.state = {
       persons: [
-        { id: 'asfa1', name: 'Max', age: 28 },
+        { id: 'asfa1', name: 'Max', age: '28' },
         { id: 'vasdf1', name: 'Manu', age: 29 },
         { id: 'asdf11', name: 'Stephanie', age: 26 },
       ],
@@ -130,5 +132,12 @@ class App extends PureComponent {
     // return React.createElement('div', {className: 'App'}, React.createElement('h1', null, 'does this work now?'));
   }
 }
+
+Person.propTypes = {
+  click: PropTypes.func,
+  name: PropTypes.string,
+  age: PropTypes.number,
+  changed: PropTypes.func,
+};
 
 export default withClass(App, classes.App);
