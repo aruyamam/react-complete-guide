@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import classes from './Person.css';
 import withClass from '../../../hoc/withClass';
@@ -8,6 +9,7 @@ class Person extends Component {
   constructor(props) {
     super(props);
     console.log('[Person.js] Inside Constructor', props);
+    this.inputElement = React.createRef();
   }
 
   componentWillMount() {
@@ -17,8 +19,12 @@ class Person extends Component {
   componentDidMount() {
     console.log('[Person.js] Inside componentDidMount()');
     if (this.props.position === 0) {
-      this.inputElement.focus();
+      this.inputElement.current.focus();
     }
+  }
+
+  focus() {
+    this.inputElement.current.focus();
   }
 
   render() {
@@ -28,7 +34,7 @@ class Person extends Component {
         <p onClick={this.props.click}>I'm a {this.props.name} and I am {this.props.age} years old!</p>
         <p>{this.props.children}</p>
         <input
-          ref={(inp) => { this.inputElement = inp }} // references are only available in stateful component
+          ref={this.inputElement} // references are only available in stateful component
           type="text"
           onChange={this.props.changed}
           value={this.props.name}
@@ -43,5 +49,12 @@ class Person extends Component {
     // arrayでもreturnできる
   }
 }
+
+Person.propTypes = {
+  click: PropTypes.func,
+  name: PropTypes.string,
+  age: PropTypes.number,
+  changed: PropTypes.func,
+};
 
 export default withClass(Person, classes.Person);
